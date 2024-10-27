@@ -54,8 +54,6 @@ except sr.UnknownValueError:
      
 except sr.RequestError as e:
     print("Could not request results from Google Speech Recognition service; {0}".format(e)) 
-
-#choices details
 if text == 'composed a mail' or text == 'Composed a mail' or text == 'one':
     r = sr.Recognizer() #recognize
     with sr.Microphone() as source:
@@ -71,14 +69,14 @@ if text == 'composed a mail' or text == 'Composed a mail' or text == 'one':
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service; {0}".format(e))    
 
-    mail = smtplib.SMTP('smtp.gmail.com',587)    #host and port area
-    mail.ehlo()  #Hostname to send for this command defaults to the FQDN of the local host.
-    mail.starttls() #security connection
-    mail.login('emailID','pswrd') #login part
-    mail.sendmail('emailID','victimID',msg) #send part
+    mail = smtplib.SMTP('smtp.gmail.com',587)    
+    mail.ehlo() 
+    mail.starttls() 
+    mail.login('emailID','pswrd') 
+    mail.sendmail('emailID','victimID',msg)
     print ("Congrates! Your mail has send. ")
     tts = gTTS(text="Congrates! Your mail has send. ", lang='en')
-    ttsname=("send.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+    ttsname=("send.mp3") 
     tts.save(ttsname)
     music = pyglet.media.load(ttsname, streaming = False)
     music.play()
@@ -87,32 +85,28 @@ if text == 'composed a mail' or text == 'Composed a mail' or text == 'one':
     mail.close()   
     
 if text == 'Check your inbox' or text == 'check your inbox' or text == 'two' or text == 'Tu' or text == 'to' or text == 'To' :
-    mail = imaplib.IMAP4_SSL('imap.gmail.com',993) #this is host and port area.... ssl security
-    unm = ('2100080198ai.ds@gmail.com')  #username
-    psw = ('GRoshitha123@')  #password
-    mail.login(unm,psw)  #login
-    stat, total = mail.select('Inbox')  #total number of mails in inbox
+    mail = imaplib.IMAP4_SSL('imap.gmail.com',993) 
+    unm = ('2100080198ai.ds@gmail.com')  
+    psw = ('GRoshitha123@')  
+    mail.login(unm,psw)  
+    stat, total = mail.select('Inbox') 
     print ("Number of mails in your inbox :"+str(total))
-    tts = gTTS(text="Total mails are :"+str(total), lang='en') #voice out
-    ttsname=("total.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+    tts = gTTS(text="Total mails are :"+str(total), lang='en') 
+    ttsname=("total.mp3") 
     tts.save(ttsname)
     music = pyglet.media.load(ttsname, streaming = False)
     music.play()
     time.sleep(music.duration)
     os.remove(ttsname)
-    
-    #unseen mails
-    unseen = mail.search(None, 'UnSeen') # unseen count
+    unseen = mail.search(None, 'UnSeen') 
     print ("Number of UnSeen mails :"+str(unseen))
     tts = gTTS(text="Your Unseen mail :"+str(unseen), lang='en')
-    ttsname=("unseen.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+    ttsname=("unseen.mp3") 
     tts.save(ttsname)
     music = pyglet.media.load(ttsname, streaming = False)
     music.play()
     time.sleep(music.duration)
     os.remove(ttsname)
-    
-    #search mails
     result, data = mail.uid('search',None, "ALL")
     inbox_item_list = data[0].split()
     new = inbox_item_list[-1]
@@ -123,14 +117,12 @@ if text == 'Check your inbox' or text == 'check your inbox' or text == 'two' or 
     print ("From: "+email_message['From'])
     print ("Subject: "+str(email_message['Subject']))
     tts = gTTS(text="From: "+email_message['From']+" And Your subject: "+str(email_message['Subject']), lang='en')
-    ttsname=("mail.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+    ttsname=("mail.mp3") 
     tts.save(ttsname)
     music = pyglet.media.load(ttsname, streaming = False)
     music.play()
     time.sleep(music.duration)
     os.remove(ttsname)
-    
-    #Body part of mails
     stat, total1 = mail.select('Inbox')
     stat, data1 = mail.fetch(total1[0], "(UID BODY[TEXT])")
     msg = data1[0][1]
@@ -138,7 +130,7 @@ if text == 'Check your inbox' or text == 'check your inbox' or text == 'two' or 
     txt = soup.get_text()
     print ("Body :"+txt)
     tts = gTTS(text="Body: "+txt, lang='en')
-    ttsname=("body.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+    ttsname=("body.mp3") 
     tts.save(ttsname)
     music = pyglet.media.load(ttsname, streaming = False)
     music.play()
