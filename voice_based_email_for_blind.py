@@ -1,6 +1,6 @@
 import speech_recognition as sr
 import smtplib
-# import pyaudio
+import pyaudio
 # import platform
 # import sys
 from bs4 import BeautifulSoup
@@ -9,73 +9,46 @@ import imaplib
 from gtts import gTTS
 import pyglet
 import os, time
-
-#pyglet.lib.load_library('avbin')
-#pyglet.have_avbin=True
-
-#project: :. Project: Voice based Email for blind :. 
-# Author: Sayak Naskar
-
-#fetch project name
 tts = gTTS(text="Project: Voice based Email for blind", lang='en')
-ttsname=("name.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+ttsname=("name.mp3")
 tts.save(ttsname)
-
 music = pyglet.media.load(ttsname, streaming = False)
 music.play()
-
 time.sleep(music.duration)
 os.remove(ttsname)
-
-#login from os
 login = os.getlogin
 print ("You are logging from : "+login())
-
-#choices
 print ("1. composed a mail.")
 tts = gTTS(text="option 1. composed a mail.", lang='en')
-ttsname=("hello.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+ttsname=("hello.mp3")
 tts.save(ttsname)
-
 music = pyglet.media.load(ttsname, streaming = False)
 music.play()
-
 time.sleep(music.duration)
 os.remove(ttsname)
-
 print ("2. Check your inbox")
 tts = gTTS(text="option 2. Check your inbox", lang='en')
 ttsname=("second.mp3")
 tts.save(ttsname)
-
 music = pyglet.media.load(ttsname, streaming = False)
 music.play()
-
 time.sleep(music.duration)
 os.remove(ttsname)
-
-#this is for input choices
 tts = gTTS(text="Your choice ", lang='en')
-ttsname=("hello.mp3") #Example: path -> C:\Users\sayak\Desktop> just change with your desktop directory. Don't use my directory.
+ttsname=("hello.mp3")
 tts.save(ttsname)
-
 music = pyglet.media.load(ttsname, streaming = False)
 music.play()
-
 time.sleep(music.duration)
 os.remove(ttsname)
-
-#voice recognition part
 r = sr.Recognizer()
 with sr.Microphone() as source:
     print ("Your choice:")
     audio=r.listen(source)
     print ("ok done!!")
-
 try:
     text=r.recognize_google(audio)
     print ("You said : "+text)
-    
 except sr.UnknownValueError:
     print("Google Speech Recognition could not understand audio.")
      
@@ -83,7 +56,7 @@ except sr.RequestError as e:
     print("Could not request results from Google Speech Recognition service; {0}".format(e)) 
 
 #choices details
-if text == '1' or text == 'One' or text == 'one':
+if text == 'composed a mail' or text == 'Composed a mail' or text == 'one':
     r = sr.Recognizer() #recognize
     with sr.Microphone() as source:
         print ("Your message :")
@@ -113,10 +86,10 @@ if text == '1' or text == 'One' or text == 'one':
     os.remove(ttsname)
     mail.close()   
     
-if text == '2' or text == 'tu' or text == 'two' or text == 'Tu' or text == 'to' or text == 'To' :
+if text == 'Check your inbox' or text == 'check your inbox' or text == 'two' or text == 'Tu' or text == 'to' or text == 'To' :
     mail = imaplib.IMAP4_SSL('imap.gmail.com',993) #this is host and port area.... ssl security
-    unm = ('your mail or victim mail')  #username
-    psw = ('pswrd')  #password
+    unm = ('2100080198ai.ds@gmail.com')  #username
+    psw = ('GRoshitha123@')  #password
     mail.login(unm,psw)  #login
     stat, total = mail.select('Inbox')  #total number of mails in inbox
     print ("Number of mails in your inbox :"+str(total))
